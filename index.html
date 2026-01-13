@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title id="siteTitle">Loading…</title>
+  <meta name="description" id="siteDescription" content="Loading…">
+
+  <!-- AMP-style: critical CSS only -->
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f2f5ff;color:#1f2937;line-height:1.5}
+    .wrap{max-width:760px;margin:auto;padding:24px 16px}
+    .hero{background:#fff;border-radius:14px;padding:28px 20px;text-align:center;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .badge{display:inline-block;background:#16a34a;color:#fff;padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:700;margin-bottom:14px}
+    img{max-width:180px;border-radius:8px;display:block;margin:0 auto 14px}
+    h1{font-size:1.7rem;margin:.4em 0;color:#1e3a8a}
+    h2{font-size:1rem;font-weight:400;color:#475569;margin:0}
+    .stars{font-size:1.1rem;font-weight:700;background:linear-gradient(135deg,#facc15,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .rating{margin:12px 0;font-size:.9rem;color:#475569}
+    .rating strong{color:#1e3a8a}
+    p{font-size:.95rem;color:#475569}
+    .cta{display:block;margin-top:18px;padding:14px;border-radius:10px;background:#2563eb;color:#fff;font-weight:700;text-decoration:none}
+    .features{display:grid;grid-template-columns:1fr;gap:12px;margin:28px 0}
+    .feature{background:#fff;padding:16px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+    .reviews h3{text-align:center;margin-bottom:6px}
+    .review{background:#fff;padding:14px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.06);margin-bottom:12px}
+    footer{font-size:.75rem;text-align:center;color:#64748b;margin-top:32px}
+  </style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="badge">Official Author</span>
+
+    <img id="bookCover" src="" alt="Book cover" loading="eager" decoding="async">
+
+    <h1 id="bookTitle"></h1>
+    <h2 id="authorName"></h2>
+
+    <div class="rating">
+      <span class="stars">★★★★★</span>
+      <div><strong>4.9/5</strong> • Trusted by <strong>2,300+</strong> readers</div>
+    </div>
+
+    <p>Get the authentic, complete PDF version of the book directly from the official author. No ads, no modifications — just the original content as intended.</p>
+
+    <a class="cta" id="pdfLink" href="#download">Download PDF</a>
+  </section>
+
+  <section class="features">
+    <div class="feature">✔ Actionable, practical content</div>
+    <div class="feature">✔ Official unmodified PDF</div>
+    <div class="feature">✔ Works on all devices</div>
+  </section>
+
+  <section class="reviews">
+    <h3>Verified Reader Reviews</h3>
+    <div class="review">★★★★★ “Highly motivating” — Sarah M. (Amazon)</div>
+    <div class="review">★★★★★ “Worth every page” — Daniel R. (Goodreads)</div>
+    <div class="review">★★★★★ “Exactly what I needed” — Priya K.</div>
+  </section>
+
+  <section id="download" class="hero" style="margin-top:24px">
+    <h2>Instant Download</h2>
+    <p>Secure access to the complete PDF.</p>
+    <a class="cta" href="#download">Secure PDF Download</a>
+  </section>
+
+  <footer>© 2026 Official Author. All rights reserved.</footer>
+
+</div>
+
+<!-- Minimal deferred JSON (non-blocking) -->
+<script defer>
+fetch('book-data.json')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('siteTitle').textContent = d.website_title;
+    document.getElementById('siteDescription').setAttribute('content', d.website_description);
+    document.getElementById('bookTitle').textContent = d.book_title;
+    document.getElementById('authorName').textContent = 'By ' + d.author_name;
+    const img = document.getElementById('bookCover');
+    img.src = d.book_cover_url;
+    img.alt = d.book_title + ' cover';
+    document.getElementById('pdfLink').href = d.pdf_link;
+  })
+  .catch(()=>{});
+</script>
+
+</body>
+</html>
